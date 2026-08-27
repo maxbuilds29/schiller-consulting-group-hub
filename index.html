@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schiller Consulting Group</title>
+<meta name="description" content="Schiller Consulting Group — die gemeinsame Klammer für Schiller Consulting, Schiller & Mayer Global Projects und Schiller & Mayer Beteiligungen.">
+
+<!--
+  HINWEIS:
+  - Neue, vierte Website: die übergeordnete Hub-/Landingpage der Gruppe (bisher nur als
+    Idee im Übersichts-Schaubild vorhanden, jetzt erstmals umgesetzt, 26.08.2026).
+  - Zweck bewusst schlank gehalten: EIN Ort, der zeigt, dass es die Gruppe als Ganzes gibt,
+    kurz einordnet wer man ist, und dann klar zu den drei (später vier) Einheiten weiterleitet.
+    Keine Duplizierung von Inhalten, die schon auf den Einzel-Websites stehen.
+  - Eigene Farbwelt bewusst gewählt, um sich von allen drei/vier Einheiten abzusetzen (Navy bei
+    Consulting, Grün bei Beteiligungen, Schwarz/Cyan bei Global Projects): edles, warmes Braun
+    + Gold. Gold ist dabei kein Zufall, sondern das Element, das sich tatsächlich durch alle
+    Einheiten zieht (Consulting: --gold:#c9a961, Global Projects: --gold:#c9a869, Beteiligungen:
+    --bronze:#b08d57) — der Hub nutzt exakt Consultings Gold-Ton, um das explizit zu machen.
+  - Die drei Einheiten-Karten sind bewusst in den ECHTEN Marken-Farben jeder Einheit gehalten
+    (nicht im Braun/Gold des Hubs) — gleiches Kartenmuster wie bereits bei Beteiligungen für die
+    Verlinkung zurück zu Consulting gebaut (dunkle Karte, Eyebrow, Titel, kurzer Text, Pill-Button).
+  - Vierte Karte (Schiller-Allianz) ist bewusst NICHT enthalten — Timing/Ob noch offen (siehe
+    Roadmap). Ergänzen ist nur eine weitere Karte, kein Strukturumbau.
+  - Links zeigen auf die aktuell tatsächlich live erreichbaren URLs (Stand 26.08.2026): Consulting
+    unter https://schillerconsulting.de, Global Projects und Beteiligungen noch auf ihren
+    *.vercel.app-Subdomains, bis die eigenen Domains registriert und verbunden sind — einfach
+    nachziehen, sobald diese feststehen.
+  - Fonts lokalisiert (Fraunces 500/600/700 + Inter 400/500/600 als woff2 in ./fonts/),
+    identisches Pattern wie bei Consulting/Beteiligungen.
+  - Content-Ergänzung (26.08.2026, Runde 2): Max fand die erste Version zu dünn an Inhalt.
+    Zwei gezielte Ergänzungen statt allgemeiner Auffüllung: "Gemeinsame Werte" (die drei
+    Werte-Karten aus Consultings Über-uns-Seite auf Gruppenebene gehoben, da sie für alle
+    Einheiten gelten, nicht nur für Consulting — reine Übernahme bereits abgestimmter Texte,
+    keine neuen Behauptungen) und "Wie die Einheiten zusammenspielen" (komplett neuer Content,
+    der bisher nirgendwo existierte: erklärt das Modell anhand von zwei Übergabe-Beispielen
+    zwischen den Einheiten, bewusst als generisches Prozess-Modell formuliert, nicht als
+    konkrete/erfundene Fallstudie mit echten Kundennamen).
+-->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+
+<style>
+  :root{
+    --brown:#241811; --brown-2:#2f2016; --brown-3:#3c2a1c;
+    --gold:#c9a961; --gold-light:#e0c990;
+    --cream:#f7f4ee; --cream-2:#efe9dd;
+    --ink:#1c150f; --ink-soft:#5c4d3f; --white:#ffffff;
+    --radius:14px; --shadow:0 20px 50px -20px rgba(36,24,17,0.3); --shadow-sm:0 8px 24px -12px rgba(36,24,17,0.2);
+  }
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:500;font-display:swap;src:url('./fonts/fraunces-500.woff2') format('woff2');}
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:600;font-display:swap;src:url('./fonts/fraunces-600.woff2') format('woff2');}
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:700;font-display:swap;src:url('./fonts/fraunces-700.woff2') format('woff2');}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('./fonts/inter-400.woff2') format('woff2');}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('./fonts/inter-500.woff2') format('woff2');}
+  @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('./fonts/inter-600.woff2') format('woff2');}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; color:var(--ink); background:var(--cream); line-height:1.65;}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-0.01em;}
+  a{text-decoration:none; color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+  .eyebrow{font-size:15.5px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .eyebrow::before{content:""; width:26px; height:2px; background:var(--gold); display:inline-block;}
+
+  header{position:sticky; top:0; z-index:100; background:rgba(36,24,17,0.92); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.06);}
+  nav.wrap{display:flex; align-items:center; height:82px;}
+  .logo-mark{font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--white);}
+  .logo-mark em{color:var(--gold-light); font-style:italic; font-weight:500;}
+  .nav-right{margin-left:auto; display:flex; align-items:center; gap:36px;}
+  .nav-links{display:flex; align-items:center; gap:32px;}
+  .nav-links a{position:relative; color:rgba(255,255,255,0.75); font-size:14.5px; font-weight:500; white-space:nowrap; transition:color .2s; padding-bottom:3px;}
+  .nav-links a::after{content:""; position:absolute; left:0; right:0; bottom:0; height:1.5px; background:var(--gold-light); transform:scaleX(0); transform-origin:right; transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a:hover::after{transform:scaleX(1); transform-origin:left;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; padding:12px 24px; border-radius:999px; transition:transform .2s, box-shadow .2s;}
+  .btn-gold{background:linear-gradient(180deg,var(--gold-light),var(--gold)); color:var(--brown);}
+  .btn-gold:hover{transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(201,169,97,0.5);}
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* HERO — gleiches Lichtkegel-Signature-Element wie bei Beteiligungen, hier in Braun/Gold statt
+     Grün/Bronze, damit die Gruppe visuell erkennbar zur selben Familie gehört, aber eigenständig. */
+  .hero{
+    position:relative; min-height:82vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:80px 24px; overflow:hidden;
+    background:linear-gradient(180deg, var(--brown) 0%, var(--brown-2) 60%, var(--brown-3) 100%);
+  }
+  #bloomCanvas{position:absolute; inset:0; width:100%; height:100%;}
+  .hero-inner{position:relative; z-index:2; max-width:820px;}
+  .hero .eyebrow{justify-content:center; color:var(--gold-light);}
+  .hero .eyebrow::before{display:none;}
+  .hero h1{color:var(--white); font-size:clamp(38px,5.4vw,60px); line-height:1.15; margin-bottom:24px;}
+  .hero h1 em{font-style:italic; color:var(--gold-light);}
+  .hero p.lead{color:rgba(255,255,255,0.72); font-size:18px; max-width:600px; margin:0 auto 36px;}
+  .cta-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .btn-ghost{border:1px solid rgba(255,255,255,0.32); color:var(--white);}
+  .btn-ghost:hover{border-color:var(--white); background:rgba(255,255,255,0.06);}
+  .hero .btn{padding:14px 28px; font-size:15px;}
+
+  section{padding:92px 0;}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-head h2{font-size:32px; color:var(--brown); margin-bottom:14px;}
+  .section-head p{color:var(--ink-soft); font-size:16px;}
+
+  /* WER WIR SIND — kurze Einordnung, bewusst ohne Doppelung von Inhalten, die schon auf den
+     Einzel-Websites stehen. Nur genug, um den Rahmen zu setzen, bevor die Karten übernehmen. */
+  .about{background:var(--cream);}
+  .about-inner{max-width:760px;}
+  .about-inner p{color:var(--ink-soft); font-size:17px; margin-bottom:18px;}
+  .about-inner p:last-child{margin-bottom:0;}
+  .about-inner strong{color:var(--brown); font-weight:600;}
+
+  /* GEMEINSAME WERTE — bewusst aus Consultings Über-uns-Seite auf Gruppenebene gehoben: diese
+     drei Prinzipien gelten für alle Einheiten, nicht nur für Consulting, gehören also eigentlich
+     hierher. Reine Übernahme der bereits abgestimmten Formulierungen, keine neuen Behauptungen. */
+  .values{background:var(--cream-2);}
+  .values-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .value-card{
+    background:var(--white); border:1px solid rgba(36,24,17,0.08); border-radius:var(--radius);
+    padding:32px 28px; box-shadow:var(--shadow-sm);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease;
+  }
+  .value-card:hover{transform:translateY(-4px); box-shadow:var(--shadow);}
+  .value-card i{color:var(--gold); font-size:26px; margin-bottom:16px; display:block;}
+  .value-card h3{font-size:18px; color:var(--brown); margin-bottom:10px; font-weight:500;}
+  .value-card p{font-size:14.5px; color:var(--ink-soft);}
+  @media (max-width:800px){ .values-grid{grid-template-columns:1fr;} }
+
+  /* EINHEITEN — drei Karten, jede in der ECHTEN Marken-Farbe der jeweiligen Einheit, gleiches
+     Muster wie die Cross-Link-Karte bei Beteiligungen zurück zu Consulting. */
+  .units{background:var(--brown); position:relative; overflow:hidden;}
+  .units::before{content:""; position:absolute; top:-160px; left:50%; transform:translateX(-50%); width:720px; height:360px; border-radius:50%; background:radial-gradient(ellipse,rgba(201,169,97,0.16),transparent 70%); animation:unitsPulse 8.5s ease-in-out infinite; pointer-events:none;}
+  @keyframes unitsPulse{0%,100%{transform:translateX(-50%) scale(1); opacity:.6;} 50%{transform:translateX(-50%) scale(1.15); opacity:1;}}
+  .units .section-head h2, .units .section-head p{color:var(--white);}
+  .units .section-head p{color:rgba(255,255,255,0.65);}
+  .units .section-head .eyebrow{color:var(--gold-light);}
+  .units .section-head .eyebrow::before{background:var(--gold-light);}
+  .unit-list{display:flex; flex-direction:column; gap:22px; position:relative;}
+  .unit-card{
+    display:block; position:relative; overflow:hidden; text-decoration:none;
+    border-radius:18px; padding:38px 46px;
+    box-shadow:0 24px 54px -26px rgba(0,0,0,0.4);
+    transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
+  }
+  .unit-card:hover{transform:translateY(-4px);}
+  .unit-card-glow{position:absolute; top:-90px; right:-70px; width:280px; height:280px; border-radius:50%; pointer-events:none;}
+  .unit-card-row{position:relative; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .unit-card-text{max-width:540px;}
+  .unit-card-eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; margin-bottom:10px;}
+  .unit-card h3{font-family:'Fraunces',serif; font-weight:600; font-size:22px; color:#fff; margin-bottom:8px;}
+  .unit-card p{font-size:14.5px; margin:0;}
+  .unit-card-cta{
+    flex-shrink:0; display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600;
+    padding:12px 24px; border-radius:999px;
+    transition:transform .25s cubic-bezier(.16,1,.3,1);
+  }
+  .unit-card:hover .unit-card-cta{transform:translateX(5px);}
+
+  /* Consulting: Navy/Gold (identisch zu den echten Markenfarben der Consulting-Website) */
+  .unit-card--consulting{background:linear-gradient(135deg,#0f1c38 0%,#152548 55%,#1c2f5a 100%);}
+  .unit-card--consulting .unit-card-glow{background:radial-gradient(circle,rgba(201,169,97,0.22),transparent 70%);}
+  .unit-card--consulting .unit-card-eyebrow{color:#c9a961;}
+  .unit-card--consulting p{color:rgba(255,255,255,0.66);}
+  .unit-card--consulting .unit-card-cta{color:#151719; background:linear-gradient(180deg,#e0c990,#c9a961);}
+
+  /* Global Projects: Near-Black/Cyan (identisch zu den echten Markenfarben der GP-Website) */
+  .unit-card--global{background:linear-gradient(135deg,#070a13 0%,#0c1120 55%,#0d1426 100%); border:1px solid rgba(79,209,255,0.12);}
+  .unit-card--global .unit-card-glow{background:radial-gradient(circle,rgba(79,209,255,0.22),transparent 70%);}
+  .unit-card--global .unit-card-eyebrow{color:#4fd1ff;}
+  .unit-card--global p{color:#8b98b3;}
+  .unit-card--global .unit-card-cta{color:#070a13; background:linear-gradient(180deg,#7fe0ff,#4fd1ff);}
+
+  /* Beteiligungen: Grün/Bronze (identisch zu den echten Markenfarben der Beteiligungen-Website) */
+  .unit-card--beteiligungen{background:linear-gradient(135deg,#132420 0%,#1a302a 55%,#213c34 100%);}
+  .unit-card--beteiligungen .unit-card-glow{background:radial-gradient(circle,rgba(176,141,87,0.22),transparent 70%);}
+  .unit-card--beteiligungen .unit-card-eyebrow{color:#d0af7c;}
+  .unit-card--beteiligungen p{color:rgba(255,255,255,0.66);}
+  .unit-card--beteiligungen .unit-card-cta{color:#171d1a; background:linear-gradient(180deg,#d0af7c,#b08d57);}
+
+  @media (max-width:600px){ .unit-card{padding:32px 28px;} .unit-card-row{flex-direction:column; align-items:flex-start;} }
+
+  /* WIE DIE EINHEITEN ZUSAMMENSPIELEN — neuer Content, der bisher nirgendwo existiert: erklärt
+     das Modell (warum drei Einheiten statt einer) anhand von zwei konkreten Übergabe-Beispielen,
+     statt nur zu behaupten "wir arbeiten zusammen". Bewusst als Prozess/Modell formuliert, nicht
+     als konkrete (erfundene) Fallstudie mit echten Kundennamen. */
+  .synergy{background:var(--cream);}
+  .synergy-intro{max-width:680px; margin-bottom:48px;}
+  .synergy-intro p{color:var(--ink-soft); font-size:16px;}
+  .flow-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .flow-card{
+    background:var(--white); border:1px solid rgba(36,24,17,0.08); border-radius:var(--radius);
+    padding:28px 30px; box-shadow:var(--shadow-sm);
+  }
+  .flow-path{display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap;}
+  .flow-unit{font-size:12.5px; font-weight:700; letter-spacing:.03em; padding:7px 14px; border-radius:999px;}
+  .flow-unit--consulting{background:rgba(15,28,56,0.08); color:#1c2f5a;}
+  .flow-unit--global{background:rgba(79,209,255,0.12); color:#0d5f75;}
+  .flow-unit--beteiligungen{background:rgba(19,36,32,0.08); color:#213c34;}
+  .flow-arrow{color:var(--gold); font-size:16px;}
+  .flow-card p{color:var(--ink-soft); font-size:14.5px;}
+  .synergy-close{margin-top:32px; text-align:center; font-family:'Fraunces',serif; font-size:19px; color:var(--brown); font-style:italic;}
+  @media (max-width:700px){ .flow-grid{grid-template-columns:1fr;} }
+
+  .cta-band{background:var(--cream-2); text-align:center;}
+  .cta-band h2{color:var(--brown); margin-bottom:14px;}
+  .cta-band p{color:var(--ink-soft); max-width:480px; margin:0 auto 30px;}
+  .cta-band .btn-gold{color:var(--brown);}
+
+  footer{background:var(--brown); color:rgba(255,255,255,0.6); padding:44px 0 28px; font-size:13.5px;}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .footer-row a{color:var(--gold-light); font-weight:500;}
+
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  .unit-list .reveal:nth-child(2){transition-delay:.1s;}
+  .unit-list .reveal:nth-child(3){transition-delay:.2s;}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#" class="logo-mark">Schiller Consulting <em>Group</em></a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#wer-wir-sind">Wer wir sind</a>
+        <a href="#einheiten">Einheiten</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <!-- HINWEIS: "Gemeinsame Werte" und "Zusammenspiel" bewusst ohne eigenen Nav-Punkt — Nav
+           bleibt schlank, beide Sektionen sind über normales Scrollen zwischen "Wer wir sind"
+           und "Einheiten" bzw. direkt danach ohnehin sichtbar. -->
+      <a href="mailto:info@schillerconsulting.de" class="btn btn-gold"><i class="ti ti-mail"></i>Kontakt</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <canvas id="bloomCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="eyebrow">Schiller Consulting Group</div>
+    <h1>Eine Herkunft.<br>Drei Wege.<br><em>Ein Anspruch.</em></h1>
+    <p class="lead">Drei spezialisierte Einheiten für Beratung, internationale Projekte und Unternehmensnachfolge — verbunden durch dieselbe unternehmerische Handschrift.</p>
+    <div class="cta-row">
+      <a href="#einheiten" class="btn btn-gold"><i class="ti ti-building-skyscraper"></i>Einheiten entdecken</a>
+      <a href="#wer-wir-sind" class="btn btn-ghost">Wer wir sind</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="wer-wir-sind">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Wer wir sind</div>
+      <h2>Ein Gedanke. Drei Umsetzungen.</h2>
+    </div>
+    <div class="about-inner reveal">
+      <p>Die Schiller Consulting Group ist die gemeinsame Klammer für mehrere spezialisierte Einheiten, die aus derselben Überzeugung entstanden sind: Mittelständische Unternehmen scheitern selten am Markt — sondern an fehlenden Strukturen, unklaren Prozessen oder einer ungelösten Nachfolge.</p>
+      <p>Statt einer einzigen, breiten Beratung haben wir uns bewusst für <strong>fokussierte Einheiten</strong> entschieden — jede mit eigenem Auftrag, eigener Sprache und eigenem Auftritt, aber mit demselben hands-on, unternehmerischen Anspruch dahinter.</p>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Gemeinsame Werte</div>
+      <h2>Woran Sie uns über alle Einheiten hinweg erkennen.</h2>
+      <p>Unabhängig davon, mit welcher Einheit Sie zu tun haben — diese drei Prinzipien gelten für die gesamte Gruppe.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <i class="ti ti-hammer"></i>
+        <h3>Umsetzungsstärke</h3>
+        <p>Wir liefern keine dicken Konzeptpapiere — wir packen an. Gemeinsam mit Ihnen, operativ und ergebnisorientiert.</p>
+      </div>
+      <div class="value-card reveal">
+        <i class="ti ti-shield-lock"></i>
+        <h3>Vertrauen &amp; Diskretion</h3>
+        <p>Wir arbeiten auf Augenhöhe. Was besprochen wird, bleibt zwischen uns — keine Standardlösung, keine leeren Versprechen.</p>
+      </div>
+      <div class="value-card reveal">
+        <i class="ti ti-leaf"></i>
+        <h3>Nachhaltigkeit</h3>
+        <p>Wir bauen keine Abhängigkeiten auf, sondern Strukturen, die ohne uns funktionieren. Unser Ziel ist Ihr langfristiger Erfolg.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="units" id="einheiten">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Unsere Einheiten</div>
+      <h2>Drei Einheiten, ein Ursprung.</h2>
+      <p>Jede mit eigenem Fokus — verbunden durch dieselbe Herkunft.</p>
+    </div>
+    <div class="unit-list">
+      <a href="https://schillerconsulting.de" target="_blank" rel="noopener" class="unit-card unit-card--consulting reveal">
+        <div class="unit-card-glow"></div>
+        <div class="unit-card-row">
+          <div class="unit-card-text">
+            <div class="unit-card-eyebrow">Schiller Consulting</div>
+            <h3>Hands-On Consulting für KMU &amp; Mittelstand</h3>
+            <p>Klares Management und moderne Digitalisierung — von Inhouse-Optimierung bis Nachfolge.</p>
+          </div>
+          <span class="unit-card-cta">Zur Website <i class="ti ti-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="https://sm-global-projects.vercel.app" target="_blank" rel="noopener" class="unit-card unit-card--global reveal">
+        <div class="unit-card-glow"></div>
+        <div class="unit-card-row">
+          <div class="unit-card-text">
+            <div class="unit-card-eyebrow">Schiller &amp; Mayer Global Projects</div>
+            <h3>Internationale Projektentwicklung</h3>
+            <p>Industrie, Infrastruktur, Energie und strategische Investments — von der Idee bis zur Umsetzung.</p>
+          </div>
+          <span class="unit-card-cta">Zur Website <i class="ti ti-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="https://sm-beteiligungen.vercel.app" target="_blank" rel="noopener" class="unit-card unit-card--beteiligungen reveal">
+        <div class="unit-card-glow"></div>
+        <div class="unit-card-row">
+          <div class="unit-card-text">
+            <div class="unit-card-eyebrow">Schiller &amp; Mayer Beteiligungen</div>
+            <h3>Nachfolgelösungen mit Substanz</h3>
+            <p>Wir übernehmen Verantwortung, wo eine klare Nachfolge fehlt — in Gesundheit, Automotive und Technologie.</p>
+          </div>
+          <span class="unit-card-cta">Zur Website <i class="ti ti-arrow-right"></i></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="synergy">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Wie die Einheiten zusammenspielen</div>
+      <h2>Drei Einheiten, ein Blick auf das Unternehmen.</h2>
+    </div>
+    <div class="synergy-intro reveal">
+      <p>Die Aufteilung in drei Einheiten bedeutet nicht, dass sie unabhängig voneinander arbeiten. Im Gegenteil: Ein Thema wandert dorthin, wo es am besten aufgehoben ist — statt an einer starren Zuständigkeit hängenzubleiben.</p>
+    </div>
+    <div class="flow-grid">
+      <div class="flow-card reveal">
+        <div class="flow-path">
+          <span class="flow-unit flow-unit--consulting">Schiller Consulting</span>
+          <i class="ti ti-arrow-right flow-arrow"></i>
+          <span class="flow-unit flow-unit--beteiligungen">Beteiligungen</span>
+        </div>
+        <p>Erkennen wir im Rahmen eines Consulting-Mandats eine ungeklärte Nachfolge, bleibt das Thema nicht unbeantwortet — wir vermitteln intern weiter, statt es mit der Beratung enden zu lassen.</p>
+      </div>
+      <div class="flow-card reveal">
+        <div class="flow-path">
+          <span class="flow-unit flow-unit--global">Global Projects</span>
+          <i class="ti ti-arrow-right flow-arrow"></i>
+          <span class="flow-unit flow-unit--consulting">Schiller Consulting</span>
+        </div>
+        <p>Internationale Projekte profitieren von derselben operativen Tiefe, die wir aus der Inhouse-Arbeit für den Mittelstand kennen — dieselbe Praxiserfahrung, nur auf größerer Bühne.</p>
+      </div>
+    </div>
+    <div class="synergy-close reveal">Eine Gruppe, ein Blick, keine Silos.</div>
+  </div>
+</section>
+
+<section class="cta-band" id="kontakt">
+  <div class="wrap reveal">
+    <h2>Fragen zur Gruppe?</h2>
+    <p>Für alles, was keine der drei Einheiten direkt betrifft, oder wenn Sie sich nicht sicher sind, wo Ihr Thema hingehört — schreiben Sie uns.</p>
+    <a href="mailto:info@schillerconsulting.de" class="btn btn-gold"><i class="ti ti-mail"></i>info@schillerconsulting.de</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <div>© 2026 Schiller Consulting Group</div>
+    <div>
+      <a href="https://schillerconsulting.de" target="_blank" rel="noopener">Schiller Consulting</a>
+      &nbsp;·&nbsp;
+      <a href="https://sm-global-projects.vercel.app" target="_blank" rel="noopener">Global Projects</a>
+      &nbsp;·&nbsp;
+      <a href="https://sm-beteiligungen.vercel.app" target="_blank" rel="noopener">Beteiligungen</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lichtkegel im Hero — gleiches Muster wie bei Beteiligungen, hier in Braun/Gold-Tönen.
+  (function(){
+    var canvas = document.getElementById('bloomCanvas');
+    var ctx = canvas.getContext('2d');
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var w, h, blobs = [];
+
+    function resize(){
+      var hero = document.querySelector('.hero');
+      w = canvas.width = hero.offsetWidth * devicePixelRatio;
+      h = canvas.height = hero.offsetHeight * devicePixelRatio;
+      canvas.style.width = hero.offsetWidth + 'px';
+      canvas.style.height = hero.offsetHeight + 'px';
+    }
+    function initBlobs(){
+      var colors = ['201,169,97', '224,201,144', '96,68,48', '60,42,28'];
+      blobs = [];
+      for(var i=0;i<5;i++){
+        blobs.push({
+          x: Math.random()*w, y: Math.random()*h,
+          r: (170 + Math.random()*150) * devicePixelRatio,
+          vx: (Math.random()-0.5) * 0.42 * devicePixelRatio,
+          vy: (Math.random()-0.5) * 0.42 * devicePixelRatio,
+          color: colors[i % colors.length],
+          alpha: 0.26 + Math.random()*0.16,
+          pulsePhase: Math.random()*Math.PI*2,
+          pulseSpeed: 0.02 + Math.random()*0.015
+        });
+      }
+    }
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      ctx.globalCompositeOperation = 'lighter';
+      blobs.forEach(function(b){
+        b.x += b.vx; b.y += b.vy;
+        if(b.x < -b.r || b.x > w+b.r) b.vx *= -1;
+        if(b.y < -b.r || b.y > h+b.r) b.vy *= -1;
+        b.pulsePhase += b.pulseSpeed;
+        var pulseR = b.r * (1 + Math.sin(b.pulsePhase) * 0.18);
+        var grad = ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,pulseR);
+        grad.addColorStop(0, 'rgba('+b.color+','+b.alpha+')');
+        grad.addColorStop(1, 'rgba('+b.color+',0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(b.x,b.y,pulseR,0,Math.PI*2); ctx.fill();
+      });
+      ctx.globalCompositeOperation = 'source-over';
+      if(!reduced) requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', function(){ resize(); initBlobs(); });
+    resize(); initBlobs(); draw();
+  })();
+
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    items.forEach(function(i){ io.observe(i); });
+  })();
+</script>
+
+</body>
+</html>
