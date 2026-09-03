@@ -705,27 +705,53 @@
     var canvas = document.getElementById('hubCanvas');
     var ctx = canvas.getContext('2d');
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var w, h, nodes, avoid, LINK_DIST;
+    var w, h, nodes, avoidZones, LINK_DIST;
 
+    // Ausweich-Zonen: statt EINER groben Box um den ganzen .hero-inner-Block (der als
+    // Block-Element immer die volle Breite seines Containers meldet, auch wenn der Text
+    // darin viel schmaler ist) werden jetzt die tatsaechlichen Zeilen/Buttons einzeln
+    // vermessen (per Range.getClientRects() fuer Text, getBoundingClientRect() je Button).
+    // Dadurch bleiben die Luecken links/rechts neben kurzen Woertern und zwischen den
+    // Textblöcken fuer Knoten frei -- vorher liess die eine grosse Box auf schmalen
+    // Screens (wo der Textblock fast die ganze Hero-Hoehe einnimmt) die Knoten fast nur
+    // noch im obersten/untersten Streifen des Heros zu.
     function resize(){
       var hero = document.querySelector('.hero');
-      var inner = document.querySelector('.hero-inner');
       w = canvas.width = hero.offsetWidth * devicePixelRatio;
       h = canvas.height = hero.offsetHeight * devicePixelRatio;
       canvas.style.width = hero.offsetWidth + 'px';
       canvas.style.height = hero.offsetHeight + 'px';
       LINK_DIST = 125 * devicePixelRatio;
       var heroRect = hero.getBoundingClientRect();
-      var innerRect = inner.getBoundingClientRect();
-      var pad = 46 * devicePixelRatio;
-      avoid = {
-        x0: (innerRect.left - heroRect.left) * devicePixelRatio - pad,
-        y0: (innerRect.top - heroRect.top) * devicePixelRatio - pad,
-        x1: (innerRect.right - heroRect.left) * devicePixelRatio + pad,
-        y1: (innerRect.bottom - heroRect.top) * devicePixelRatio + pad
-      };
+      var pad = 26 * devicePixelRatio;
+      avoidZones = [];
+      function addZone(rect){
+        if(rect.width < 2 || rect.height < 2) return;
+        avoidZones.push({
+          x0: (rect.left - heroRect.left) * devicePixelRatio - pad,
+          y0: (rect.top - heroRect.top) * devicePixelRatio - pad,
+          x1: (rect.right - heroRect.left) * devicePixelRatio + pad,
+          y1: (rect.bottom - heroRect.top) * devicePixelRatio + pad
+        });
+      }
+      function addTextZones(el){
+        if(!el) return;
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var rects = range.getClientRects();
+        for(var i=0;i<rects.length;i++) addZone(rects[i]);
+      }
+      addTextZones(document.querySelector('.hero .eyebrow'));
+      addTextZones(document.querySelector('.hero h1'));
+      document.querySelectorAll('.hero .cta-row .btn').forEach(function(btn){ addZone(btn.getBoundingClientRect()); });
     }
-    function insideAvoid(x, y){ return x > avoid.x0 && x < avoid.x1 && y > avoid.y0 && y < avoid.y1; }
+    function insideAvoid(x, y){
+      for(var i=0;i<avoidZones.length;i++){
+        var z = avoidZones[i];
+        if(x > z.x0 && x < z.x1 && y > z.y0 && y < z.y1) return z;
+      }
+      return null;
+    }
     function randomPointOutsideAvoid(){
       var x, y, tries = 0;
       do { x = Math.random()*w; y = Math.random()*h; tries++; } while(insideAvoid(x,y) && tries < 40);
@@ -751,8 +777,9 @@
         if(nx < 0 || nx > w) nd.vx *= -1;
         if(ny < 0 || ny > h) nd.vy *= -1;
         nx = nd.x + nd.vx; ny = nd.y + nd.vy;
-        if(insideAvoid(nx, ny)){
-          var acx = (avoid.x0+avoid.x1)/2, acy = (avoid.y0+avoid.y1)/2;
+        var hitZone = insideAvoid(nx, ny);
+        if(hitZone){
+          var acx = (hitZone.x0+hitZone.x1)/2, acy = (hitZone.y0+hitZone.y1)/2;
           if(Math.abs(nx-acx) > Math.abs(ny-acy)) nd.vx *= -1; else nd.vy *= -1;
           nx = nd.x + nd.vx; ny = nd.y + nd.vy;
         }
@@ -789,7 +816,21 @@
       ctx.globalCompositeOperation = 'source-over';
       raf = (!reduced && inView) ? requestAnimationFrame(draw) : null;
     }
-    window.addEventListener('resize', function(){ resize(); initNodes(); });
+    // iOS/Mobile-Browser feuern 'resize', wenn beim Scrollen die Adressleiste ein-/ausklappt --
+    // das aendert nur die Hoehe, nicht die Breite. Ein volles initNodes() bei jedem dieser Events
+    // wuerfelte alle Knotenpositionen neu und liess das Netzwerk beim Wischen chaotisch "springen".
+    // Jetzt per Debounce gebuendelt, und nur bei echter Breitenaenderung (Rotation/Fenster-Resize)
+    // komplett neu gewuerfelt -- eine reine Hoehenaenderung passt nur noch die Canvas-Groesse an.
+    var lastW = window.innerWidth, resizeTimer = null;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){
+        var widthChanged = window.innerWidth !== lastW;
+        lastW = window.innerWidth;
+        resize();
+        if(widthChanged) initNodes();
+      }, 200);
+    });
     resize(); initNodes();
     // Laeuft nur, solange der Hero im Bild ist -- bis zu 42 Knoten mit paarweiser
     // Abstandsberechnung sind pro Frame nicht ganz billig; ohne diese Bremse lief das
